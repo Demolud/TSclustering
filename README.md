@@ -6,3 +6,4 @@ One can upload a .csv file and the application will visualise data in the form o
 
 Application is running on my server at http://iwoaugustynski.ue.wroc.pl/apps/TSclustering/
 
+You can check how it works using a.csv file from repository.
