@@ -1,15 +1,8 @@
-
-# This is the server logic for a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
-
 library(shiny)
-
+library(TSclust)
 
 shinyServer(function(input, output) {
-  library(TSclust)
+
 
   output$distPlot <- renderImage({
 
@@ -17,16 +10,16 @@ shinyServer(function(input, output) {
     if (is.null(inFile)){
       return (NULL)}
     file<-read.csv(file = inFile$datapath, sep = input$sep, dec = input$dec)
-    clust<-diss(file, "CDM")
-    clust <- hclust(clust, method = "ward.D")
+    clust<-diss(file, "CDM")                     # applying distance metrics
+    clust <- hclust(clust, method = "ward.D")    # calculating distances
     
 
-    outfile <- tempfile(fileext='.png')
-    png(outfile, width=input$w, height=input$h)
+    outfile <- tempfile(fileext='.png')          # this format is better for this type of graphs
+    png(outfile, width=input$w, height=input$h)  # and is ready to use in papers.
     par(cex=1)
          plot(clust, main=input$main, xlab = input$xlab, ylab = input$ylab, sub = "")
     if (input$rect == TRUE) {
-      rect.hclust(clust, k=input$k, border = input$rectcol)
+      rect.hclust(clust, k=input$k, border = input$rectcol) # cluster highlighting
     }
         dev.off()
 
